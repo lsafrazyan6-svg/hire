@@ -1,0 +1,70 @@
+/* Figma Styles of your File */
+:root {
+  /* Colors */
+  --bg-gradientcard: linear-gradient(
+    136.33deg,
+    rgba(221, 242, 255, 1) 0%,
+    rgba(247, 248, 250, 1) 61.17262244224548%,
+    rgba(247, 248, 250, 1) 100%
+  );
+
+  /* Fonts */
+  /* Effects */
+}
+/* Figma Color Variables of your File */
+:root,
+[data-primitive-mode="mode-1"] {
+  /* mode-1 */
+  --900b: #010202;
+  --500b: #4a545f;
+  --100b: #ececec;
+  --500: #0067d9;
+  --400: #1b86fb;
+  --100: #c3ddff;
+  --200: #94c1fb;
+  --50b: #f7f9fc;
+  --bg: #ffffff;
+  --400b: #626d7a;
+  --600: #004cb3;
+  --300: #61a3f9;
+  --50: #eaf5fc;
+  --700: #003b8f;
+  --300b: #b8bec5;
+  --200b: #d7dbdf;
+  --800b: #0d1012;
+}
+
+:root,
+[data-semantic-mode="mode-1"] {
+  /* mode-1 */
+  --text-text-01: var(--900b);
+  --text-text-02: var(--500b);
+  --text-text-disabled: var(--100b);
+  --text-text-03: var(--400b);
+  --text-link-primary: var(--500);
+  --text-link-hover: var(--600);
+  --text-link-disabled: var(--200);
+  --bg: var(--bg);
+  --border-default: var(--100);
+  --border-hover: var(--200);
+  --border-active: #ffffff;
+  --text-text-inverse: var(--50b);
+  --icon-icon1-fill: var(--50b);
+  --icon-icon1-stroke: var(--100b);
+  --icon-icon2-fill: var(--300b);
+  --icon-icon2-stroke: var(--400b);
+  --icon-icondisabled-fill: var(--100b);
+  --icon-icondisabled-stroke: var(--200b);
+  --btn-btn-1: var(--500);
+  --btn-btn1-hover: var(--600);
+  --btn-btn1-active: var(--700);
+  --btn-btn-2: var(--50);
+  --btn-btn2-hover: var(--100);
+  --btn-btn2-active: var(--200);
+  --btn-btn3-stroke: var(--200b);
+  --btn-btn3-hover: var(--200b);
+  --btn-btn3-active: var(--300b);
+  --text-primary: var(--500);
+  --icon-iconreverse-fill: var(--800b);
+  --icon-iconreverse-stroke: var(--900b);
+}
