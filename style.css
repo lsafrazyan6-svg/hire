@@ -77,44 +77,34 @@
 }
 .group-2087325915 {
   flex-shrink: 0;
-  width: 142px;
+  width: 146.06px;
   height: 45px;
   position: static;
 }
 .frame-2087326598 {
   display: flex;
   flex-direction: row;
-  gap: 16.73px;
+  gap: 12px;
   align-items: center;
   justify-content: flex-start;
-  width: 142px;
+  width: 146.06px;
   height: 45px;
   position: absolute;
   left: 0px;
   top: 0px;
 }
-.accessibility {
+.vector {
   flex-shrink: 0;
-  width: 45px;
-  height: 45px;
+  width: 47.85px;
+  height: 41.87px;
   position: relative;
   overflow: visible;
-  aspect-ratio: 1;
 }
 .main {
   flex-shrink: 0;
   width: 81px;
   height: 39px;
   position: relative;
-  overflow: visible;
-}
-.vector-31 {
-  border-radius: 0px;
-  width: 13px;
-  height: 12px;
-  position: absolute;
-  left: 38px;
-  top: 4px;
   overflow: visible;
 }
 .frame-2087326520 {
@@ -513,7 +503,7 @@
   font-weight: 400;
   position: relative;
 }
-.vector {
+.vector2 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -643,7 +633,7 @@
   top: 20.51%;
   overflow: visible;
 }
-.vector2 {
+.vector3 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -684,7 +674,7 @@
   top: 20.51%;
   overflow: visible;
 }
-.vector3 {
+.vector4 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -725,7 +715,7 @@
   top: 20.51%;
   overflow: visible;
 }
-.vector4 {
+.vector5 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -800,7 +790,7 @@
   font-weight: var(--caption-s-font-weight, 500);
   position: relative;
 }
-.vector5 {
+.vector6 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -841,7 +831,7 @@
   top: 20.51%;
   overflow: visible;
 }
-.vector6 {
+.vector7 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -882,7 +872,7 @@
   top: 20.51%;
   overflow: visible;
 }
-.vector7 {
+.vector8 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -923,7 +913,7 @@
   top: 20.51%;
   overflow: visible;
 }
-.vector8 {
+.vector9 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -964,7 +954,7 @@
   top: 20.51%;
   overflow: visible;
 }
-.vector9 {
+.vector10 {
   flex-shrink: 0;
   width: 14px;
   height: 19px;
@@ -1142,10 +1132,16 @@
   height: 84px;
   position: relative;
 }
+.group-2087325916 {
+  flex-shrink: 0;
+  width: 142px;
+  height: 45px;
+  position: static;
+}
 .frame-20873265982 {
   display: flex;
   flex-direction: row;
-  gap: 16.73px;
+  gap: 12px;
   align-items: center;
   justify-content: flex-start;
   width: 142px;
@@ -1154,28 +1150,18 @@
   left: 14px;
   top: 0px;
 }
-.accessibility2 {
+.vector11 {
   flex-shrink: 0;
-  width: 45px;
-  height: 45px;
+  width: 47.85px;
+  height: 41.87px;
   position: relative;
   overflow: visible;
-  aspect-ratio: 1;
 }
 .main8 {
   flex-shrink: 0;
   width: 81px;
   height: 39px;
   position: relative;
-  overflow: visible;
-}
-.vector-312 {
-  border-radius: 0px;
-  width: 13px;
-  height: 12px;
-  position: absolute;
-  left: 52px;
-  top: 4px;
   overflow: visible;
 }
 ._2025-2026 {
