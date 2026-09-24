@@ -1,0 +1,645 @@
+<meta charset="utf-8">
+<title>Библиотека референсов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#eceeec; --surface:#f8f8f6; --sunken:#e2e5e2; --ink:#16181a; --mut:#666c70; --line:#d3d7d4;
+    --accent:#1f4fe0; --accent-ink:#ffffff; --ok:#16181a; --no:#b3261e; --no-bg:#f9e6e4; --q:#7a6a2f;
+    --hatch-a:#d9dcd9; --hatch-b:#e6e8e6;
+    --sans:'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif; --mono:'JetBrains Mono', ui-monospace, monospace;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111314; --surface:#1a1d1f; --sunken:#22262a; --ink:#e9ebea; --mut:#8c9297; --line:#2c3134;
+      --accent:#7b96ff; --accent-ink:#0d1020; --ok:#e9ebea; --no:#ff8f86; --no-bg:#3a1f1d; --q:#d8c56b;
+      --hatch-a:#23272a; --hatch-b:#1d2124;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111314; --surface:#1a1d1f; --sunken:#22262a; --ink:#e9ebea; --mut:#8c9297; --line:#2c3134;
+    --accent:#7b96ff; --accent-ink:#0d1020; --ok:#e9ebea; --no:#ff8f86; --no-bg:#3a1f1d; --q:#d8c56b;
+    --hatch-a:#23272a; --hatch-b:#1d2124;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg); color:var(--ink); font:14px/1.5 var(--sans); min-height:100vh}
+  button,input,select,textarea{font:inherit; color:inherit}
+  button{cursor:pointer}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .mono{font-family:var(--mono); font-size:12px}
+  .mut{color:var(--mut)}
+
+  .top{display:flex; align-items:center; gap:18px; padding:14px 28px; border-bottom:1px solid var(--line); background:var(--surface); position:sticky; top:0; z-index:5; flex-wrap:wrap}
+  .brand{font-weight:700; font-size:16px; letter-spacing:-.01em; margin-right:6px}
+  .tabs{display:flex; gap:2px}
+  .tab{border:0; background:none; padding:7px 12px; border-radius:8px; color:var(--mut); font-weight:500}
+  .tab[aria-selected="true"]{background:var(--sunken); color:var(--ink)}
+  .search{flex:1 1 220px; max-width:420px; margin-left:auto; padding:8px 12px; border:1px solid var(--line); border-radius:8px; background:var(--bg)}
+  .btn{border:1px solid var(--line); background:var(--surface); padding:8px 14px; border-radius:8px; font-weight:500}
+  .btn:hover{border-color:var(--mut)}
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+  .btn.danger{color:var(--no); border-color:var(--no)}
+  .btn.sm{padding:5px 10px; font-size:12.5px}
+  .btn[disabled]{opacity:.5; cursor:default}
+
+  main{padding:22px 28px 60px; max-width:1500px; margin:0 auto}
+  .banner{margin:0 28px; padding:9px 14px; background:var(--no-bg); color:var(--no); border-radius:8px; font-size:13px}
+  .banner[hidden]{display:none}
+  .bar{display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; margin-bottom:18px}
+  .grp{display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+  .grp .lbl{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--mut); margin-right:2px}
+  .chip{border:1px solid var(--line); background:transparent; border-radius:999px; padding:4px 11px; font-size:12.5px; color:var(--mut)}
+  .chip[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--bg)}
+  .count{font-family:var(--mono); font-size:12px; color:var(--mut); margin-left:auto}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:20px 18px}
+  .card{display:flex; flex-direction:column; gap:9px; text-align:left; background:none; border:0; padding:0}
+  .card .fig{position:relative; aspect-ratio:4/5; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:var(--sunken)}
+  .card:hover .fig{border-color:var(--mut)}
+  .card img{width:100%; height:100%; object-fit:cover; object-position:top; display:block}
+  .ph{width:100%; height:100%; display:flex; align-items:center; justify-content:center; text-align:center; padding:14px; font-size:12px; color:var(--mut);
+      background:repeating-linear-gradient(135deg,var(--hatch-a) 0 14px,var(--hatch-b) 14px 28px)}
+  .ph span{background:var(--surface); border-radius:6px; padding:5px 9px}
+  .mark{position:absolute; top:8px; right:8px; width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; background:var(--surface); border:1px solid var(--line)}
+  .mark.ok{background:var(--ok); color:var(--bg); border-color:var(--ok)}
+  .mark.no{background:var(--no); color:#fff; border-color:var(--no)}
+  .mark.q{background:var(--q); color:#fff; border-color:var(--q)}
+  .ex{position:absolute; left:8px; top:8px; font-family:var(--mono); font-size:10.5px; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:2px 7px; color:var(--mut)}
+  .card .t{font-weight:600; line-height:1.3}
+  .card .m{font-size:12px; color:var(--mut)}
+  .tags{display:flex; flex-wrap:wrap; gap:4px}
+  .tag{font-family:var(--mono); font-size:11px; color:var(--mut); border:1px solid var(--line); border-radius:5px; padding:1px 6px}
+
+  .empty{border:1px dashed var(--line); border-radius:12px; padding:40px 24px; text-align:center; color:var(--mut)}
+  .empty b{display:block; color:var(--ink); font-size:16px; margin-bottom:6px}
+
+  h2{font-size:20px; letter-spacing:-.01em; margin:0 0 4px}
+  .sub{color:var(--mut); margin:0 0 18px; max-width:70ch}
+
+  .cols{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
+  .col{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:8px; text-align:left}
+  .col:hover{border-color:var(--mut)}
+  .col .thumbs{display:flex; gap:4px}
+  .col .thumbs span{width:44px; height:56px; border-radius:6px; overflow:hidden; border:1px solid var(--line); background:var(--sunken)}
+  .col .thumbs img{width:100%; height:100%; object-fit:cover; object-position:top}
+
+  .mech{display:grid; gap:24px}
+  .mech section{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px 18px}
+  .mech h3{margin:0 0 10px; font-size:14px; display:flex; align-items:center; gap:10px}
+  .mech li{margin:0 0 8px; list-style:none; display:flex; gap:10px; align-items:baseline; flex-wrap:wrap}
+  .mech ul{margin:0; padding:0}
+
+  dialog{border:1px solid var(--line); border-radius:14px; padding:0; background:var(--surface); color:var(--ink); max-width:1080px; width:calc(100% - 32px); max-height:calc(100vh - 32px)}
+  dialog::backdrop{background:rgba(10,12,13,.55)}
+  .dhead{display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--surface); z-index:2}
+  .dhead .st{margin-left:auto; font-family:var(--mono); font-size:12px; color:var(--mut)}
+  .dbody{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:22px; padding:18px}
+  @media (max-width:820px){ .dbody{grid-template-columns:1fr} }
+  .big{border-radius:10px; overflow:hidden; border:1px solid var(--line); background:var(--sunken); position:sticky; top:64px; align-self:start}
+  .big img{width:100%; display:block; max-height:74vh; object-fit:contain; background:var(--sunken)}
+  .big .ph{min-height:300px}
+  .f{display:flex; flex-direction:column; gap:5px; margin-bottom:12px}
+  .f label,.f .l{font-size:12px; color:var(--mut); font-weight:500}
+  .f input,.f select,.f textarea{padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); width:100%}
+  .f textarea{min-height:64px; resize:vertical}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .verd{display:flex; gap:6px}
+  .verd button{flex:1; padding:8px; border:1px solid var(--line); border-radius:8px; background:var(--bg); font-weight:600}
+  .verd button.on[data-m="ok"]{background:var(--ok); color:var(--bg); border-color:var(--ok)}
+  .verd button.on[data-m="no"]{background:var(--no); color:#fff; border-color:var(--no)}
+  .verd button.on[data-m="q"]{background:var(--q); color:#fff; border-color:var(--q)}
+  input.need{border-color:var(--no)!important; background:var(--no-bg)!important}
+  details.sec{border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg)}
+  details.sec summary{padding:9px 12px; cursor:pointer; font-weight:600; font-size:13px; display:flex; justify-content:space-between}
+  details.sec .in{padding:4px 12px 4px}
+  .h3{font-size:13px; font-weight:700; margin:16px 0 8px; display:flex; align-items:center; gap:10px}
+  .note{font-size:12px; color:var(--mut); background:var(--sunken); border-radius:8px; padding:8px 10px; margin-bottom:10px}
+  .actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+  .toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:9px 16px; border-radius:9px; font-size:13px; z-index:50; max-width:90vw}
+  .toast[hidden]{display:none}
+  .drop{border:1.5px dashed var(--line); border-radius:12px; padding:22px; text-align:center; color:var(--mut); background:var(--bg)}
+  .drop.over{border-color:var(--accent); color:var(--ink)}
+  .drop img{max-width:100%; max-height:240px; border-radius:8px; display:block; margin:0 auto 8px}
+  @media (max-width:720px){
+    .top{position:static; padding:12px 16px; gap:10px}
+    .brand{margin-right:auto}
+    .search{order:5; flex:1 1 100%; max-width:none; margin-left:0}
+    main{padding:16px 16px 48px}
+    .banner{margin:0 16px}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:16px 12px}
+    dialog{width:calc(100% - 16px); max-height:calc(100vh - 16px)}
+    .dbody{padding:14px}
+    .big{position:static}
+  }
+  @media (prefers-reduced-motion: no-preference){ .card .fig{transition:border-color .15s} }
+</style>
+
+<header class="top">
+  <div class="brand">Референсы</div>
+  <nav class="tabs" role="tablist" aria-label="Разделы">
+    <button class="tab" role="tab" data-v="lib" aria-selected="true">Библиотека</button>
+    <button class="tab" role="tab" data-v="cols" aria-selected="false">Подборки</button>
+    <button class="tab" role="tab" data-v="mech" aria-selected="false">Механики</button>
+  </nav>
+  <input class="search" id="q" type="search" placeholder="Найти: название, тег, узел, приём" aria-label="Поиск">
+  <button class="btn primary" id="add">Добавить</button>
+</header>
+<div class="banner" id="banner" hidden></div>
+<main id="view" aria-live="polite"></main>
+
+<dialog id="dlg-card" aria-label="Карточка референса"></dialog>
+<dialog id="dlg-add" aria-label="Новый референс"></dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+  var TYPES = [['interfaces','Интерфейсы'],['graphic','Графический дизайн'],['mockups','Мокапы'],['3d','3D'],['motion','Моушн'],['text','Тексты']];
+  var FOLDER = {interfaces:'интерфейсы', graphic:'графический-дизайн', mockups:'мокапы', '3d':'3d', motion:'моушн', text:'тексты'};
+  var TLABEL = {}; TYPES.forEach(function(t){ TLABEL[t[0]] = t[1]; });
+  var MARKS = {ok:['✔','берём'], no:['✘','не берём'], q:['?','непонятно']};
+
+  /* Чек-лист разбора владелицы: секции, параметры, подсказки значений. */
+  var DECOMP = [
+    {id:'image', title:'Образ', f:[
+      ['proportions','Пропорции','модули и макрообъекты ↔ микрообъекты',[]],
+      ['density','Плотность вёрстки','',['плотная','средняя','низкая']],
+      ['layout','Стиль вёрстки','',['швейцарская','журнальная','экспериментальная']]]},
+    {id:'graphics', title:'Графика', f:[
+      ['form','Форма','',['простые фигуры','графсистемы']],
+      ['photo','Фотостиль и эффекты','',['без эффектов','прозрачные подложки','блюр','дуотон','режимы наложения','глитч']],
+      ['illus','Стиль иллюстраций','',['линейные','заполненные','ручные инструменты','изометрия','3D']],
+      ['icons','Стиль иконок','',['заполненные','линейные','острые углы','мягкие углы','многоцветные','монохромные','3D']]]},
+    {id:'color', title:'Цвет', f:[
+      ['fill','Заполняющий цвет','фон, большие площади',['нейтральный белый','серый','примесь цвета','цветной','чёрный']],
+      ['accent','Акцентный цвет','',['кислотный','спокойный','яркий','чёрно-белый']],
+      ['gamma','Гамма','',['тёплая','холодная']],
+      ['multi','Многоцветность','доли цветов в % или «царство серого»',[]],
+      ['grad','Градиенты','слои света и материала, число форм, направление, блюр, шум, стопы',[]],
+      ['grey','Серый','',['стандартный','с примесью']],
+      ['princ','Принцип сочетания','',['подобие','контраст']]]},
+    {id:'fx', title:'Эффекты', f:[
+      ['shadow','Тени','',['нет','невидимые','лёгкие','жирные','цветные']],
+      ['rules','Линейки','',['без линеек','невидимые','брутальные']],
+      ['blur','Прозрачность и блюр','',[]]]},
+    {id:'type', title:'Типографика', f:[
+      ['caps','Капс','',['разряженный','неразряженный','подписи капсом','заголовки капсом','весь текст капсом']],
+      ['contrast','Контраст заголовков к тексту','',['обычный (+1 размер)','большой (+2–3)','экстремальный']],
+      ['styles','Стили шрифта','категория, не название',['только гротеск','гротеск + антиква','гротеск + гротеск с характером','гротеск + италик']],
+      ['width','Ширина','',['конденсед','стандарт','вайд','экстендед']],
+      ['weight','Насыщенность','',['тонкий','лайт','регуляр','медиум','болд','экстраболд']],
+      ['leading','Интерлиньяж','',['плотный','средний','воздушный']],
+      ['tracking','Трекинг','',['плюс','минус']]]},
+    {id:'mat', title:'Материал (стекло, поверхность)', f:[
+      ['where','Где живёт','слой и что под ним',[]],
+      ['many','Сколько на экран','',[]],
+      ['edge','Край','обводка, кромка света или без края',[]],
+      ['tint','Оттенок','тонирует подложку или свой цвет',[]],
+      ['textOn','Текст на стекле','чем обеспечен контраст',[]],
+      ['light','Свет','один источник для всех поверхностей',[]]]},
+    {id:'out', title:'Вывод: графическая идея', f:[
+      ['main','Основной приём','',[],'ta'],
+      ['strange','Остранение','',[],'ta'],
+      ['meta','Метафора','',[],'ta']]}
+  ];
+
+  var caps = {db:null, assets:null, sample:null, user:null};
+  var state = {refs:new Map(), cols:new Map(), v:'lib', q:'', type:'', verdict:'', tag:'', col:'', openCol:'', loaded:false, mem:false};
+  var writers = new Map();          // очередь записи по документу
+  var timers = new Map();
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+
+  function h(tag, attrs) {
+    var el = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      var v = attrs[k];
+      if (v == null || v === false) return;
+      if (k === 'class') el.className = v;
+      else if (k === 'text') el.textContent = v;
+      else if (k.slice(0, 2) === 'on') el.addEventListener(k.slice(2), v);
+      else if (v === true) el.setAttribute(k, '');
+      else el.setAttribute(k, v);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c == null || c === false) continue;
+      el.append(c.nodeType ? c : document.createTextNode(String(c)));
+    }
+    return el;
+  }
+  function uid() { return (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)).replace(/-/g, '').slice(0, 10); }
+  function toast(msg) {
+    var t = $('#toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, 3200);
+  }
+  function safeUrl(u) { try { var x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch (e) { return ''; } }
+  function blobUrl(id) { return '/_blob/' + id; }
+
+  /* ---------- хранилище: db, а без него память страницы ---------- */
+  var EXAMPLES = [
+    {id:'ex1', example:true, title:'Онбординг: одна причина, два пункта', source:'Пример (не из вашей базы)', url:'', type:'interfaces', tags:['онбординг','разрешения'], node:'ONB-1 · зачем нужен микрофон',
+     take:'Одна фраза, зачем доступ, и два пункта: что нужно и как управляем данными. Кнопка «не сейчас» — вторая по весу.', avoid:'Крупная иконка и одна кнопка без объяснения.',
+     verdict:{m:'ok', r:''}, dec:{density:'низкая', layout:'швейцарская', fill:'нейтральный белый', accent:'спокойный', shadow:'нет', styles:'только гротеск', main:'Один вопрос на экран, объяснение вместо запроса.'}, mech:['Ставить причину доступа до системного диалога','Вторичное действие оформлять кнопкой второго уровня, а не голым текстом'], cols:['exc1'], ts:3},
+    {id:'ex2', example:true, title:'Свет вместо заливки', source:'Пример (не из вашей базы)', url:'', type:'graphic', tags:['градиент','свет'], node:'фон экрана записи',
+     take:'Поле мягкого света на тёмном канвасе без единого края; состояние меняет оттенок, форма остаётся.', avoid:'Линейный градиент из двух цветов.',
+     verdict:{m:'ok', r:''}, dec:{fill:'чёрный', grad:'два слоя: свет и материал отдельно от структуры; несколько форм; блюр, затем шум; радиальный', gamma:'тёплая', blur:'блюр на наложение форм'}, mech:['Разбирать градиент двумя слоями: свет и материал, структура','Шум ставить поверх блюра, иначе градиент читается плоским'], cols:['exc1'], ts:2},
+    {id:'ex3', example:true, title:'Прогресс кольцом без цифр', source:'Пример (не из вашей базы)', url:'', type:'motion', tags:['загрузка'], node:'обработка записи',
+     take:'', avoid:'Спиннер, если известно, сколько осталось.',
+     verdict:{m:'no', r:'Для нашего сценария время неизвестно, кольцо обещает то, чего нет'}, dec:{}, mech:[], cols:[], ts:1}
+  ];
+  var EXCOLS = [{id:'exc1', example:true, name:'Пример: экран записи', brief:'Подборка под один узел карты экранов', character:'Спокойный, тёмный, свет вместо графики', ts:1}];
+
+  async function initCaps() {
+    var c = window.claude;
+    if (!c || !c.use) return;
+    try { caps.db = await c.use('db'); } catch (e) {}
+    try { caps.assets = await c.use('assets'); } catch (e) {}
+    try { caps.sample = await c.use('sample'); } catch (e) {}
+    try { caps.user = await c.use('user'); } catch (e) {}
+  }
+  function fromSnap(snap) { var m = new Map(); snap.docs.forEach(function (d) { var x = d.data() || {}; x.id = d.id; m.set(d.id, x); }); return m; }
+  function subscribe() {
+    if (caps.db) {
+      caps.db.collection('refs').onSnapshot(function (s) { state.refs = fromSnap(s); state.loaded = true; render(); },
+        function (e) { banner('Не удалось читать базу: ' + e.code); });
+      caps.db.collection('collections').onSnapshot(function (s) { state.cols = fromSnap(s); render(); },
+        function (e) { banner('Не удалось читать подборки: ' + e.code); });
+    } else {
+      state.mem = true;
+      EXAMPLES.forEach(function (x) { state.refs.set(x.id, JSON.parse(JSON.stringify(x))); });
+      EXCOLS.forEach(function (x) { state.cols.set(x.id, JSON.parse(JSON.stringify(x))); });
+      state.loaded = true;
+      banner('Хранилище не подключено: изменения живут только в этом окне и пропадут при перезагрузке.');
+    }
+  }
+  function banner(t) { var b = $('#banner'); b.textContent = t; b.hidden = !t; }
+  function clean(o) { var c = JSON.parse(JSON.stringify(o)); delete c.id; return c; }
+  function putDoc(coll, obj) {
+    obj.ts = Date.now();
+    var map = coll === 'refs' ? state.refs : state.cols;
+    map.set(obj.id, obj);
+    if (!caps.db) return Promise.resolve();
+    var key = coll + '/' + obj.id;
+    var prev = writers.get(key) || Promise.resolve();
+    var next = prev.then(function () { return caps.db.doc(key).set(clean(obj)); })
+      .catch(function (e) { toast('Не сохранилось: ' + (e && e.code || 'ошибка')); });
+    writers.set(key, next);
+    return next;
+  }
+  function delDoc(coll, id) {
+    (coll === 'refs' ? state.refs : state.cols).delete(id);
+    if (!caps.db) return Promise.resolve();
+    return caps.db.doc(coll + '/' + id).delete().catch(function (e) { toast('Не удалилось: ' + (e && e.code || 'ошибка')); });
+  }
+  function canWrite() { try { return !caps.user || !caps.user.can || caps.user.can('data.write') !== false; } catch (e) { return true; } }
+
+  /* ---------- фильтры и виды ---------- */
+  function refsList() { return Array.from(state.refs.values()); }
+  function hay(r) { return [r.title, r.source, r.node, r.take, r.avoid, (r.tags || []).join(' '), (r.mech || []).join(' ')].join(' ').toLowerCase(); }
+  function filtered() {
+    var q = state.q.trim().toLowerCase();
+    return refsList().filter(function (r) {
+      if (state.type && r.type !== state.type) return false;
+      var m = r.verdict && r.verdict.m || '';
+      if (state.verdict === 'none' ? m : (state.verdict && m !== state.verdict)) return false;
+      if (state.tag && (r.tags || []).indexOf(state.tag) < 0) return false;
+      if (state.col && (r.cols || []).indexOf(state.col) < 0) return false;
+      if (q && hay(r).indexOf(q) < 0) return false;
+      return true;
+    }).sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+  }
+  function topTags() {
+    var n = {}; refsList().forEach(function (r) { (r.tags || []).forEach(function (t) { n[t] = (n[t] || 0) + 1; }); });
+    return Object.keys(n).sort(function (a, b) { return n[b] - n[a] || a.localeCompare(b); }).slice(0, 12);
+  }
+  function chip(label, pressed, fn) { return h('button', {class:'chip', type:'button', 'aria-pressed':String(!!pressed), onclick:fn, text:label}); }
+
+  function figure(r, cls) {
+    var fig = h('div', {class:cls || 'fig'});
+    if (r.asset) fig.append(h('img', {src:blobUrl(r.asset), alt:r.title || 'Референс', loading:'lazy'}));
+    else fig.append(h('div', {class:'ph'}, h('span', {text: r.example ? 'Пример без картинки' : 'Картинка не добавлена'})));
+    return fig;
+  }
+  function card(r) {
+    var m = r.verdict && r.verdict.m || '';
+    var fig = figure(r);
+    if (m) fig.append(h('div', {class:'mark ' + m, title:MARKS[m][1], text:MARKS[m][0]}));
+    if (r.example) fig.append(h('div', {class:'ex', text:'пример'}));
+    var tags = h('div', {class:'tags'}); (r.tags || []).slice(0, 3).forEach(function (t) { tags.append(h('span', {class:'tag', text:t})); });
+    return h('button', {class:'card', type:'button', onclick:function () { openCard(r.id); }},
+      fig, h('div', {class:'t', text:r.title || 'Без названия'}),
+      h('div', {class:'m', text:[TLABEL[r.type] || '', r.node].filter(Boolean).join(' · ')}), tags);
+  }
+
+  function viewLib() {
+    var v = h('div');
+    var bar = h('div', {class:'bar'});
+    var g1 = h('div', {class:'grp'}, h('span', {class:'lbl', text:'Раздел'}), chip('Все', !state.type, function () { state.type = ''; render(); }));
+    TYPES.forEach(function (t) { g1.append(chip(t[1], state.type === t[0], function () { state.type = state.type === t[0] ? '' : t[0]; render(); })); });
+    var g2 = h('div', {class:'grp'}, h('span', {class:'lbl', text:'Отметка'}), chip('Все', !state.verdict, function () { state.verdict = ''; render(); }));
+    [['ok','✔ берём'],['no','✘ не берём'],['q','? непонятно'],['none','без отметки']].forEach(function (x) { g2.append(chip(x[1], state.verdict === x[0], function () { state.verdict = state.verdict === x[0] ? '' : x[0]; render(); })); });
+    bar.append(g1, g2);
+    var tg = topTags();
+    if (tg.length) { var g3 = h('div', {class:'grp'}, h('span', {class:'lbl', text:'Теги'})); tg.forEach(function (t) { g3.append(chip(t, state.tag === t, function () { state.tag = state.tag === t ? '' : t; render(); })); }); bar.append(g3); }
+    var list = filtered();
+    bar.append(h('span', {class:'count', text:list.length + ' из ' + state.refs.size}));
+    v.append(bar);
+    if (!state.refs.size) {
+      v.append(h('div', {class:'empty'}, h('b', {text:'В библиотеке пока пусто'}), 'Добавьте первый референс: перетащите картинку в окно или вставьте её из буфера. Для каждого сразу указывайте, для какого узла или действия он нужен и что именно берём.'));
+    } else if (!list.length) {
+      v.append(h('div', {class:'empty'}, h('b', {text:'Ничего не найдено'}), 'Сбросьте фильтры или поиск.'));
+    } else {
+      var grid = h('div', {class:'grid'}); list.forEach(function (r) { grid.append(card(r)); }); v.append(grid);
+    }
+    return v;
+  }
+
+  function viewCols() {
+    var v = h('div');
+    if (state.openCol && state.cols.get(state.openCol)) return viewColDetail(state.cols.get(state.openCol));
+    v.append(h('h2', {text:'Подборки'}), h('p', {class:'sub', text:'Подборка собирается под одну работу и всегда начинается с её характера. Приёмы из чужой работы по умолчанию не переносятся.'}));
+    var bar = h('div', {class:'actions'}, h('button', {class:'btn primary', type:'button', onclick:newCol, text:'Новая подборка'})); bar.style.marginBottom = '16px'; v.append(bar);
+    var arr = Array.from(state.cols.values()).sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+    if (!arr.length) { v.append(h('div', {class:'empty'}, h('b', {text:'Подборок нет'}), 'Создайте подборку и добавляйте в неё референсы из их карточек.')); return v; }
+    var grid = h('div', {class:'cols'});
+    arr.forEach(function (c) {
+      var members = refsList().filter(function (r) { return (r.cols || []).indexOf(c.id) >= 0; });
+      var th = h('div', {class:'thumbs'}); members.slice(0, 5).forEach(function (r) { th.append(h('span', null, r.asset ? h('img', {src:blobUrl(r.asset), alt:''}) : null)); });
+      grid.append(h('button', {class:'col', type:'button', onclick:function () { state.openCol = c.id; render(); }},
+        h('div', {class:'t', text:c.name || 'Без названия'}), h('div', {class:'mut', text:c.character || 'Характер работы не указан'}),
+        th, h('div', {class:'mono mut', text:members.length + ' референсов' + (c.example ? ' · пример' : '')})));
+    });
+    v.append(grid); return v;
+  }
+  function newCol() {
+    var name = prompt('Название подборки (например, экран записи)'); if (!name) return;
+    var character = prompt('Характер работы одной фразой: какой у неё вайб и чего она никогда не делает?') || '';
+    var c = {id:uid(), name:name.trim(), character:character.trim(), brief:''}; putDoc('collections', c).then(function () { state.openCol = c.id; render(); }); state.openCol = c.id; render();
+  }
+  function viewColDetail(c) {
+    var v = h('div');
+    v.append(h('button', {class:'btn sm', type:'button', onclick:function () { state.openCol = ''; render(); }, text:'← Все подборки'}));
+    var name = h('input', {value:c.name || '', 'aria-label':'Название'}); name.style.cssText = 'font-size:20px;font-weight:700;border:0;background:none;padding:14px 0 2px;width:100%';
+    var ch = h('input', {value:c.character || '', placeholder:'Характер работы: какой вайб и чего работа никогда не делает', 'aria-label':'Характер'}); ch.style.cssText = 'border:0;background:none;width:100%;padding:2px 0 6px;color:var(--mut)';
+    var br = h('input', {value:c.brief || '', placeholder:'Для чего подборка: проект, узел, задача', 'aria-label':'Для чего'}); br.style.cssText = 'border:0;background:none;width:100%;padding:2px 0 14px;color:var(--mut)';
+    function saveMeta() { c.name = name.value; c.character = ch.value; c.brief = br.value; putDoc('collections', c); }
+    [name, ch, br].forEach(function (i) { i.addEventListener('change', saveMeta); });
+    v.append(name, ch, br);
+    var members = refsList().filter(function (r) { return (r.cols || []).indexOf(c.id) >= 0; });
+    if (!members.length) v.append(h('div', {class:'empty'}, h('b', {text:'В подборке пока нет референсов'}), 'Откройте карточку референса и добавьте её в эту подборку.'));
+    else { var g = h('div', {class:'grid'}); members.forEach(function (r) { g.append(card(r)); }); v.append(g); }
+    v.append(h('div', {class:'actions'}, h('button', {class:'btn danger sm', type:'button', text:'Удалить подборку', onclick:function () {
+      if (!confirm('Удалить подборку «' + (c.name || '') + '»? Референсы останутся в библиотеке.')) return;
+      refsList().forEach(function (r) { if ((r.cols || []).indexOf(c.id) >= 0) { r.cols = r.cols.filter(function (x) { return x !== c.id; }); putDoc('refs', r); } });
+      delDoc('collections', c.id); state.openCol = ''; render(); }})));
+    return v;
+  }
+
+  function viewMech() {
+    var v = h('div', {class:'mech'});
+    v.append(h('div', null, h('h2', {text:'Механики'}), h('p', {class:'sub', text:'Приёмы, разобранные из референсов и записанные так, чтобы работать без картинки. Копируйте раздел целиком в _механики.md соответствующей папки references/.'})));
+    var q = state.q.trim().toLowerCase(), any = false;
+    TYPES.forEach(function (t) {
+      var items = [];
+      refsList().forEach(function (r) { if (r.type === t[0]) (r.mech || []).forEach(function (m) { if (!q || (m + ' ' + r.title).toLowerCase().indexOf(q) >= 0) items.push({m:m, r:r}); }); });
+      if (!items.length) return; any = true;
+      var ul = h('ul'); items.forEach(function (it) { ul.append(h('li', null, h('span', {text:it.m}), h('button', {class:'tag', type:'button', style:'cursor:pointer;background:none', text:it.r.title, onclick:function () { openCard(it.r.id); }}))); });
+      var md = '## Разобрано из референсов\n\n' + items.map(function (it) { return '- ' + it.m + ' (' + it.r.title + ')'; }).join('\n') + '\n';
+      v.append(h('section', null, h('h3', null, t[1], h('span', {class:'mono mut', text:'references/' + FOLDER[t[0]] + '/_механики.md'}), h('button', {class:'btn sm', type:'button', style:'margin-left:auto', text:'Копировать', onclick:function () { copy(md); }})), ul));
+    });
+    if (!any) v.append(h('div', {class:'empty'}, h('b', {text:'Механик пока нет'}), 'Они появляются из карточек: в разделе «Механики» карточки запишите приём одной строкой.'));
+    return v;
+  }
+
+  function render() {
+    document.querySelectorAll('.tab').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.v === state.v)); });
+    var view = $('#view'); view.replaceChildren();
+    if (!state.loaded) { view.append(h('div', {class:'empty', text:'Загружаю библиотеку'})); return; }
+    view.append(state.v === 'cols' ? viewCols() : state.v === 'mech' ? viewMech() : viewLib());
+  }
+
+  /* ---------- копирование и экспорт ---------- */
+  function copy(text) {
+    function fb() { var ta = h('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'; document.body.append(ta); ta.select(); try { document.execCommand('copy'); toast('Скопировано'); } catch (e) { toast('Не удалось скопировать'); } ta.remove(); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast('Скопировано'); }, fb); else fb();
+  }
+  function refMarkdown(r) {
+    var m = r.verdict && r.verdict.m, out = ['# ' + (r.title || 'Без названия'), ''];
+    out.push('- Раздел: references/' + (FOLDER[r.type] || ''));
+    if (r.source) out.push('- Источник: ' + r.source + (r.url ? ' (' + r.url + ')' : ''));
+    if (r.node) out.push('- Для узла или действия: ' + r.node);
+    if (m) out.push('- Отметка: ' + MARKS[m][0] + ' ' + MARKS[m][1] + (r.verdict.r ? ': ' + r.verdict.r : ''));
+    if (r.take) out.push('', '## Что берём и почему', '', r.take);
+    if (r.avoid) out.push('', '## Что не берём', '', r.avoid);
+    var rows = [];
+    DECOMP.forEach(function (s) { s.f.forEach(function (f) { var val = r.dec && r.dec[f[0]]; if (val) rows.push('| ' + s.title + ' | ' + f[1] + ' | ' + String(val).replace(/\|/g, '/').replace(/\n/g, ' ') + ' |'); }); });
+    if (rows.length) out.push('', '## Разбор', '', '| Секция | Параметр | Значение |', '|---|---|---|', rows.join('\n'));
+    if ((r.mech || []).length) out.push('', '## Механики', '', r.mech.map(function (x) { return '- ' + x; }).join('\n'));
+    return out.join('\n') + '\n';
+  }
+
+  /* ---------- карточка референса ---------- */
+  var cur = null, curDraft = null, dirty = false;
+  function openCard(id) {
+    var r = state.refs.get(id); if (!r) return;
+    curDraft = JSON.parse(JSON.stringify(r)); curDraft.id = id; curDraft.dec = curDraft.dec || {}; curDraft.tags = curDraft.tags || []; curDraft.mech = curDraft.mech || []; curDraft.cols = curDraft.cols || []; curDraft.verdict = curDraft.verdict || {m:'', r:''};
+    cur = id; dirty = false;
+    var d = $('#dlg-card'); d.replaceChildren(); buildCard(d); if (!d.open) d.showModal();
+  }
+  function saveSoon() {
+    dirty = true; setStatus('Изменено');
+    clearTimeout(timers.get('card')); timers.set('card', setTimeout(saveNow, 700));
+  }
+  function saveNow() {
+    if (!curDraft) return Promise.resolve();
+    clearTimeout(timers.get('card'));
+    var snap = JSON.parse(JSON.stringify(curDraft)); dirty = false;
+    return putDoc('refs', snap).then(function () { setStatus('Сохранено'); });
+  }
+  function setStatus(t) { var s = $('#card-st'); if (s) s.textContent = t; }
+
+  function field(label, node, cls) { return h('div', {class:'f' + (cls ? ' ' + cls : '')}, h('label', {text:label}), node); }
+  function bind(el, get, set) { el.value = get() || ''; el.addEventListener('input', function () { set(el.value); saveSoon(); }); return el; }
+
+  function buildCard(d) {
+    var r = curDraft, editable = canWrite();
+    var st = h('span', {class:'st', id:'card-st', text:editable ? 'Сохранено' : 'Только просмотр'});
+    d.append(h('div', {class:'dhead'}, h('b', {text:'Референс'}), r.example ? h('span', {class:'tag', text:'пример'}) : null, st,
+      h('button', {class:'btn sm', type:'button', text:'Закрыть', onclick:function () { d.close(); }})));
+    var body = h('div', {class:'dbody'}); d.append(body);
+
+    var left = h('div'); var big = figure(r, 'big'); left.append(big);
+    if (safeUrl(r.url)) left.append(h('p', {class:'mono', style:'margin:10px 0 0;word-break:break-all'}, h('a', {href:safeUrl(r.url), target:'_blank', rel:'noopener noreferrer', text:safeUrl(r.url)})));
+    body.append(left);
+
+    var right = h('div'); body.append(right);
+    var title = bind(h('input'), function () { return r.title; }, function (v) { r.title = v; }); title.style.fontWeight = '600'; title.setAttribute('aria-label', 'Название');
+    right.append(field('Название', title));
+    right.append(h('div', {class:'row2'}, field('Источник (продукт, автор)', bind(h('input'), function () { return r.source; }, function (v) { r.source = v; })), field('Ссылка', bind(h('input', {type:'url', placeholder:'https://'}), function () { return r.url; }, function (v) { r.url = v; }))));
+    var sel = h('select'); TYPES.forEach(function (t) { sel.append(h('option', {value:t[0], text:t[1]})); }); sel.value = r.type || 'interfaces'; sel.addEventListener('change', function () { r.type = sel.value; saveSoon(); });
+    right.append(h('div', {class:'row2'}, field('Раздел', sel), field('Теги через запятую', bind(h('input'), function () { return r.tags.join(', '); }, function (v) { r.tags = v.split(',').map(function (x) { return x.trim(); }).filter(Boolean); }))));
+    right.append(field('Для какого узла или действия', bind(h('input', {placeholder:'например: ONB-1 · зачем нужен микрофон'}), function () { return r.node; }, function (v) { r.node = v; })));
+
+    /* отметка */
+    var reason = bind(h('input', {placeholder:'Причина (у ✘ обязательна)'}), function () { return r.verdict.r; }, function (v) { r.verdict.r = v; needCheck(); });
+    var verd = h('div', {class:'verd', role:'group', 'aria-label':'Отметка'});
+    ['ok','no','q'].forEach(function (k) { verd.append(h('button', {type:'button', 'data-m':k, class:r.verdict.m === k ? 'on' : '', text:MARKS[k][0] + ' ' + MARKS[k][1], onclick:function () {
+      r.verdict.m = r.verdict.m === k ? '' : k; verd.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.dataset.m === r.verdict.m); }); needCheck(); saveSoon(); }})); });
+    function needCheck() { reason.classList.toggle('need', r.verdict.m === 'no' && !r.verdict.r.trim()); }
+    right.append(h('div', {class:'f'}, h('span', {class:'l', text:'Отметка'}), verd, reason)); needCheck();
+
+    right.append(field('Что берём и почему', bind(h('textarea'), function () { return r.take; }, function (v) { r.take = v; })));
+    right.append(field('Что не берём', bind(h('textarea'), function () { return r.avoid; }, function (v) { r.avoid = v; })));
+
+    /* разбор */
+    var head = h('div', {class:'h3'}, 'Разбор по осям');
+    var aiBtn = h('button', {class:'btn sm', type:'button', text:'Разобрать с Claude'}); aiBtn.style.marginLeft = 'auto';
+    if (caps.sample && r.asset && editable) head.append(aiBtn);
+    right.append(head);
+    right.append(h('div', {class:'note', text:'Значения из чек-листа подсказываются, но можно писать своими словами. Цвета и размеры по картинке — оценка, точные берите с живой страницы. Шрифт называйте категорией, не названием.'}));
+    var aiOut = h('div'); right.append(aiOut);
+    var secEls = {};
+    DECOMP.forEach(function (s) {
+      var det = h('details', {class:'sec'}); var filled = s.f.filter(function (f) { return r.dec[f[0]]; }).length;
+      det.append(h('summary', null, s.title, h('span', {class:'mono mut', text:filled + '/' + s.f.length})));
+      var inn = h('div', {class:'in'});
+      s.f.forEach(function (f) {
+        var inp = f[4] === 'ta' ? h('textarea') : h('input');
+        if (f[3].length && f[4] !== 'ta') { var lid = 'dl-' + s.id + '-' + f[0]; inp.setAttribute('list', lid); var dl = h('datalist', {id:lid}); f[3].forEach(function (o) { dl.append(h('option', {value:o})); }); inn.append(dl); }
+        if (f[2]) inp.setAttribute('placeholder', f[2]);
+        bind(inp, function () { return r.dec[f[0]]; }, function (v) { r.dec[f[0]] = v; });
+        secEls[f[0]] = inp; inn.append(field(f[1], inp));
+      });
+      det.append(inn); if (filled) det.open = true; right.append(det);
+    });
+    aiBtn.addEventListener('click', function () { runAI(r, aiBtn, aiOut, secEls); });
+
+    /* механики */
+    right.append(h('div', {class:'h3', text:'Механики'}));
+    right.append(field('Приёмы, которые можно воспроизвести без картинки, по одному в строке', bind(h('textarea', {placeholder:'Например: ставить причину доступа до системного диалога'}), function () { return r.mech.join('\n'); }, function (v) { r.mech = v.split('\n').map(function (x) { return x.trim(); }).filter(Boolean); })));
+
+    /* подборки */
+    var colsBox = h('div', {class:'grp'});
+    function paintCols() {
+      colsBox.replaceChildren();
+      Array.from(state.cols.values()).forEach(function (c) { colsBox.append(chip(c.name || 'Без названия', r.cols.indexOf(c.id) >= 0, function () {
+        var i = r.cols.indexOf(c.id); if (i >= 0) r.cols.splice(i, 1); else r.cols.push(c.id); paintCols(); saveSoon(); })); });
+      colsBox.append(h('button', {class:'btn sm', type:'button', text:'+ новая', onclick:function () {
+        var name = prompt('Название подборки'); if (!name) return; var ch = prompt('Характер работы одной фразой') || '';
+        var c = {id:uid(), name:name.trim(), character:ch.trim(), brief:''}; state.cols.set(c.id, c); putDoc('collections', c); r.cols.push(c.id); paintCols(); saveSoon(); }}));
+    }
+    paintCols();
+    right.append(h('div', {class:'h3', text:'Подборки'}), colsBox);
+
+    var act = h('div', {class:'actions'},
+      h('button', {class:'btn', type:'button', text:'Скопировать как Markdown', onclick:function () { copy(refMarkdown(r)); }}),
+      editable ? h('button', {class:'btn danger', type:'button', text:'Удалить референс', onclick:function () {
+        if (!confirm('Удалить «' + (r.title || 'Без названия') + '»? Картинка останется в хранилище страницы.')) return;
+        clearTimeout(timers.get('card')); curDraft = null; delDoc('refs', r.id); d.close(); render(); }}) : null);
+    right.append(act);
+    if (!editable) right.querySelectorAll('input,textarea,select,button.verd,.verd button').forEach(function (e) { e.disabled = true; });
+  }
+  $('#dlg-card').addEventListener('close', function () {
+    if (curDraft && dirty) saveNow();
+    cur = null; curDraft = null; render();
+  });
+
+  /* ---------- разбор картинки Claude ---------- */
+  function imageBlob(assetId) {
+    return new Promise(function (res, rej) {
+      var img = new Image();
+      img.onload = function () {
+        var s = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+        c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        c.toBlob(function (b) { b ? res(b) : rej(new Error('no blob')); }, 'image/jpeg', 0.9);
+      };
+      img.onerror = function () { rej(new Error('load')); };
+      img.src = blobUrl(assetId);
+    });
+  }
+  var aiCtl = null;
+  async function runAI(r, btn, out, els) {
+    if (aiCtl) { aiCtl.abort(); return; }
+    out.replaceChildren(h('div', {class:'note', text:'Разбираю картинку. Обычно это занимает до минуты.'}));
+    btn.textContent = 'Остановить';
+    aiCtl = new AbortController();
+    try {
+      var lim = await caps.sample.limits().catch(function () { return null; });
+      if (!lim || !lim.images) throw {code:'images_unavailable'};
+      var blob = await imageBlob(r.asset);
+      var schema = {}; DECOMP.forEach(function (s) { s.f.forEach(function (f) { schema[f[0]] = f[3].length ? 'одно из: ' + f[3].join(' | ') + ' — или своими словами' : (f[2] || 'коротко'); }); });
+      var prompt = 'Ты помогаешь продуктовому дизайнеру разобрать визуальный референс на механику. На картинке референс из раздела «' + (TLABEL[r.type] || '') + '»' + (r.node ? ', нужен для узла «' + r.node + '»' : '') + '.\n' +
+        'Заполни разбор строго по перечню ключей и верни ТОЛЬКО один JSON-объект вида {"dec": {ключ: значение}, "mech": [строки]}.\n' +
+        'Правила: 1) значения выбирай из подсказок, если подходят, иначе пиши 2–8 слов своими словами; 2) если по картинке параметр определить нельзя, ставь пустую строку, ничего не выдумывай; ' +
+        '3) цвета и пропорции называй как оценку по картинке и не выдавай за точные значения; 4) шрифт называй только категорией (гротеск, антиква, моно), никогда названием; ' +
+        '5) для градиентов опиши слои: свет и материал отдельно от структуры, число форм, направление, блюр, шум; 6) «main», «strange», «meta» — по одному короткому предложению; ' +
+        '7) «mech» — от 3 до 5 приёмов, которые можно воспроизвести без картинки, каждый начинается с глагола в повелительном наклонении.\n' +
+        'Ключи и подсказки:\n' + JSON.stringify(schema, null, 1);
+      var res = await caps.sample.json(prompt, {images: blob, signal: aiCtl.signal, modelTier: 'default'});
+      var dec = (res && res.dec) || {}, n = 0;
+      Object.keys(dec).forEach(function (k) { var v = dec[k]; if (typeof v === 'string' && v.trim() && !(r.dec[k] || '').trim() && els[k]) { r.dec[k] = v.trim(); els[k].value = v.trim(); n++; } });
+      if (Array.isArray(res && res.mech) && !r.mech.length) { r.mech = res.mech.map(String).filter(Boolean).slice(0, 6); var mt = document.querySelector('#dlg-card textarea[placeholder^="Например"]'); if (mt) mt.value = r.mech.join('\n'); }
+      out.replaceChildren(h('div', {class:'note', text:'Черновик Claude: заполнено ' + n + ' пустых полей, ваши записи не тронуты. Проверьте по картинке: цвета и пропорции здесь оценка.'}));
+      document.querySelectorAll('#dlg-card details.sec').forEach(function (dt) { dt.open = true; });
+      saveSoon();
+    } catch (e) {
+      var code = e && e.code, msg = {cancelled:'Остановлено.', images_unavailable:'В этом окне Claude не принимает картинки.', not_granted:'Доступ к Claude не разрешён для этой страницы.', rate_limited:'Слишком много запросов или исчерпан лимит, попробуйте позже.', image_rejected:'Картинка не подошла: слишком большая или неподдерживаемый формат.', invalid_json:'Ответ пришёл не в том формате, попробуйте ещё раз.'}[code] || 'Не получилось разобрать картинку. Попробуйте ещё раз.';
+      out.replaceChildren(h('div', {class:'note', text:msg}));
+    } finally { aiCtl = null; btn.textContent = 'Разобрать с Claude'; }
+  }
+
+  /* ---------- добавление ---------- */
+  var addFile = null;
+  function openAdd(file) {
+    addFile = file || null;
+    var d = $('#dlg-add'); d.replaceChildren();
+    d.style.maxWidth = '560px';
+    d.append(h('div', {class:'dhead'}, h('b', {text:'Новый референс'}), h('button', {class:'btn sm', style:'margin-left:auto', type:'button', text:'Отмена', onclick:function () { d.close(); }})));
+    var box = h('div', {style:'padding:18px'}); d.append(box);
+    var drop = h('label', {class:'drop', for:'file-in'}); var fin = h('input', {type:'file', id:'file-in', accept:'image/png,image/jpeg,image/webp,image/gif', hidden:true});
+    function paintDrop() { drop.replaceChildren(); if (addFile) { drop.append(h('img', {src:URL.createObjectURL(addFile), alt:'Предпросмотр'}), h('span', {class:'mono', text:addFile.name || 'изображение из буфера'})); } else drop.append(caps.assets ? 'Перетащите картинку сюда, выберите файл или вставьте из буфера (Cmd/Ctrl+V)' : 'Загрузка картинок доступна тому, кто редактирует страницу. Референс можно добавить без картинки.'); }
+    paintDrop();
+    if (caps.assets || state.mem) {
+      fin.addEventListener('change', function () { if (fin.files[0]) { addFile = fin.files[0]; paintDrop(); } });
+      ['dragover', 'dragenter'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+      ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+      drop.addEventListener('drop', function (e) { var f = e.dataTransfer && e.dataTransfer.files[0]; if (f && /^image\//.test(f.type)) { addFile = f; paintDrop(); } });
+    }
+    box.append(drop, fin);
+    var title = h('input', {placeholder:'Что это: коротко, по сути приёма', 'aria-label':'Название'}), src = h('input', {placeholder:'Продукт или автор'}), url = h('input', {type:'url', placeholder:'https://'}), node = h('input', {placeholder:'Для какого узла или действия'});
+    var sel = h('select'); TYPES.forEach(function (t) { sel.append(h('option', {value:t[0], text:t[1]})); });
+    var form = h('div', {style:'margin-top:14px'}, field('Название', title), h('div', {class:'row2'}, field('Источник', src), field('Раздел', sel)), field('Ссылка', url), field('Для какого узла или действия', node));
+    box.append(form);
+    var go = h('button', {class:'btn primary', type:'button', text:'Добавить и разобрать', onclick:async function () {
+      if (!title.value.trim()) { title.classList.add('need'); title.focus(); return; }
+      go.disabled = true; go.textContent = 'Добавляю';
+      var r = {id:uid(), title:title.value.trim(), source:src.value.trim(), url:url.value.trim(), type:sel.value, tags:[], node:node.value.trim(), take:'', avoid:'', verdict:{m:'', r:''}, dec:{}, mech:[], cols:[]};
+      try {
+        if (addFile && caps.assets) { var up = await caps.assets.upload(addFile); r.asset = up.id; }
+        else if (addFile && state.mem) { r.asset = ''; toast('Без хранилища картинка не сохраняется'); }
+      } catch (e) { toast('Картинка не загрузилась: ' + (e && e.code || 'ошибка') + '. Референс добавлен без неё.'); }
+      await putDoc('refs', r); d.close(); state.v = 'lib'; render(); openCard(r.id);
+    }});
+    box.append(h('div', {class:'actions'}, go));
+    d.showModal(); setTimeout(function () { title.focus(); }, 30);
+  }
+
+  /* ---------- события ---------- */
+  document.querySelectorAll('.tab').forEach(function (b) { b.addEventListener('click', function () { state.v = b.dataset.v; state.openCol = ''; render(); }); });
+  $('#q').addEventListener('input', function (e) { state.q = e.target.value; render(); });
+  $('#add').addEventListener('click', function () { openAdd(); });
+  document.addEventListener('paste', function (e) {
+    var items = (e.clipboardData && e.clipboardData.items) || []; if (document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+    for (var i = 0; i < items.length; i++) if (items[i].type.indexOf('image/') === 0) { var f = items[i].getAsFile(); if (f) { e.preventDefault(); openAdd(f); return; } }
+  });
+  window.addEventListener('dragover', function (e) { if (e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types, 'Files') >= 0 && !$('#dlg-add').open) e.preventDefault(); });
+  window.addEventListener('drop', function (e) { if ($('#dlg-add').open || $('#dlg-card').open) return; var f = e.dataTransfer && e.dataTransfer.files[0]; if (f && /^image\//.test(f.type)) { e.preventDefault(); openAdd(f); } });
+
+  render();
+  initCaps().then(function () { subscribe(); render(); });
+})();
+</script>
